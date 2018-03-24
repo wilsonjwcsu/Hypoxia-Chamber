@@ -1,0 +1,23 @@
+﻿<Page
+    x:Class="HypoxiaChamber.HelpPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:HypoxiaChamber.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <CommandBar Background="#323232" BorderBrush="#ffffff" FontFamily="Segoe UI">
+            <AppBarButton Icon="Home" Label="Home" Foreground="#ffffff" Click="HomeViewButton_Click"/>
+            <AppBarButton Icon="ThreeBars" Label="Trends" Foreground="#ffffff" Click="TrendsButton_Click"/>
+            <AppBarButton Icon="Flag" Label="Alarms" Foreground="#ffffff" Click="AlarmsButton_Click"/>
+            <AppBarButton Icon="Calendar" Label="Sequences" Foreground="#ffffff" Click="SequenceEditorButton_Click"/>
+            <AppBarButton Icon="Globe" Label="Notification" Foreground="#ffffff" Click="NotificationsButton_Click"/>
+            <AppBarButton Icon="Setting" Label="Settings" Foreground="#ffffff" Click="SettingsPageButton_Click"/>
+            <AppBarButton Icon="Help" Label="Help" Foreground="#ffffff" Click="HelpPageButton_Click"/>
+        </CommandBar>
+        <TextBlock HorizontalAlignment="Left" Height="52" Margin="11,-1,0,0" Text="Help" TextWrapping="Wrap" VerticalAlignment="Top" Width="282" FontSize="36" Foreground="White"/>
+    
+    </Grid>
+</Page>
