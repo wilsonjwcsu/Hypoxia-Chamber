@@ -62,6 +62,9 @@ namespace HypoxiaChamber
 
         public static float currentBrightness;
         public static float currentTemperature;
+        public static float currentPressure;
+        public static float currentHumidity;
+        //public static float currentAltitude;
         public static float currentO2;
         public static float currentCO2;
 
@@ -103,14 +106,14 @@ namespace HypoxiaChamber
      * updates the UI when the sensors make a new reading
      * */
 
-        class DataHandlerClass
-        {
-            public DataHandlerClass(SensorControl SensorUpdate)
-            {
-                SensorUpdate.DataReceived += new HypoxiaChamber.DataReceivedEventHandler(UpdateUI);
-            }
-        }
-        private async void UpdateUI(object sender, SensorDataEventArgs e)
+        //class DataHandlerClass
+        //{
+        //    public DataHandlerClass(SensorControl SensorUpdate)
+        //    {
+        //        SensorUpdate.DataReceived += new HypoxiaChamber.DataReceivedEventHandler(UpdateUI);
+        //    }
+        //}
+        private async void SensorProvider_DataReceived(object sender, SensorDataEventArgs e)
         {
             String format = FormatOfSensorValue(e.SensorValue);
             String nextValue = e.SensorValue + "," + DateTime.Now + Environment.NewLine;
@@ -124,6 +127,14 @@ namespace HypoxiaChamber
                         App.O2List.Add(nextValue);
                     });
                     break;
+                case "CO2":
+                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                    {
+                        currentCO2 = e.SensorValue;
+                        CO2Gauge.Value = currentCO2;
+                        //App.CO2List.Add(nextValue);
+                    });
+                    break;
                 //case "Brightness":
                 //    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 //    {
@@ -131,22 +142,36 @@ namespace HypoxiaChamber
                 //        App.BrightnessList.Add(nextValue);
                 //    });
                 //    break;
-                //case "Temperature":
+                case "Temperature":
+                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                    {
+                        currentTemperature = e.SensorValue;
+                        Temp_Txt.Text = string.Format("{0:0,0.00}", currentTemperature);
+                        App.TemperatureList.Add(nextValue);
+                    });
+                    break;
+                case "Pressure":
+                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                    {
+                        currentPressure = e.SensorValue;
+                        //App.PressureList.Add(nextValue);
+                    });
+                    break;
+                case "Humidity":
+                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                    {
+                        currentHumidity = e.SensorValue;
+                        //App.HumidityList.Add(nextValue);
+                    });
+                    break;
+                //case "Altitude":
                 //    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 //    {
-                //        currentTemperature = e.SensorValue;
-                //        App.TemperatureList.Add(nextValue);
+                //        currentAltitude = e.SensorValue;
+                //        App.AltitudeList.Add(nextValue);
                 //    });
                 //    break;
-                //case "CO2":
-                //    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                //    {
-                //        currentCO2 = e.SensorValue;
-                //        CurrentSoilMoistureNumber.Text = e.SensorValue.ToString(format);
-                      
-                //        App.O2List.Add(nextValue);
-                //    });
-                //    break;
+                   
             }
         }
         private String FormatOfSensorValue(float value)
@@ -156,6 +181,15 @@ namespace HypoxiaChamber
                 return "000";
             }
             return "####0.0";
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs navArgs)
+        {
+            //App.SensorProvider.StartTimer();
+
+            App.SensorProvider.DataReceived += SensorProvider_DataReceived;
+
+
         }
 
         /**
@@ -227,6 +261,6 @@ namespace HypoxiaChamber
         {
 
         }
-        
+                
     }
 }

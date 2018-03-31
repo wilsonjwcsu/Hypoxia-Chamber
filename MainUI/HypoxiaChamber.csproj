@@ -119,6 +119,7 @@
     <Compile Include="Pages\Trends.xaml.cs">
       <DependentUpon>Trends.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Sensors\BME280.cs" />
     <Compile Include="Sensors\MCP3008.cs" />
     <Compile Include="Pages\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
@@ -127,14 +128,15 @@
       <DependentUpon>O2Focus.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sensors\MHZ16.cs" />
     <Compile Include="Sensors\SensorControl.cs" />
+    <Compile Include="Utilities\DeviceSequencer.cs" />
     <Compile Include="Utilities\FileNames.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="MainUI_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Properties\Default.rd.xml" />
@@ -205,8 +207,17 @@
       <Name>Windows IoT Extensions for the UWP</Name>
     </SDKReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="MainUI_TemporaryKey.pfx" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DelaySign>false</DelaySign>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

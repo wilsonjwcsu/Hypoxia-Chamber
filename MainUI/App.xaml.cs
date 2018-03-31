@@ -27,12 +27,16 @@ namespace HypoxiaChamber
     sealed partial class App : Application
     {
         //this helps find the data from the sensors
-        public static SensorControl SensorProvider;
+        public static SensorDataProvider SensorProvider;
 
         //these are the files that the app reads from for the sensors
         public static Windows.Storage.StorageFile BrightnessFile;
         public static Windows.Storage.StorageFile TemperatureFile;
+        public static Windows.Storage.StorageFile PreussureFile;
+        public static Windows.Storage.StorageFile HumidityFile;
+        //public static Windows.Storage.StorageFile AltitudeFile;
         public static Windows.Storage.StorageFile O2File;
+        public static Windows.Storage.StorageFile CO2File;
         public static Windows.Storage.StorageFile TwitterFile;
 
         //this is the folder in which the files are stored
@@ -41,13 +45,20 @@ namespace HypoxiaChamber
         //when the files are read, then they are stored in these lists
         public static IList<string> Brightnessresult;
         public static IList<string> Temperatureresult;
+        public static IList<string> Pressureresult;
+        public static IList<string> Humidityresult;
+        //public static IList<string> Altituderesult;
         public static IList<string> O2result;
+        public static IList<string> CO2result;
         public static IList<string> Twitterresult;
 
         //these lists are where new data is temporarily stored so that we are not 
         //readong and writing to files that often
         public static List<String> BrightnessList;
         public static List<String> TemperatureList;
+        public static List<String> PressureList;
+        public static List<String> HumidityList;
+        //public static List<String> AltitudeList;
         public static List<String> O2List;
         public static List<String> CO2List;
 
@@ -65,6 +76,7 @@ namespace HypoxiaChamber
             TwitterSettings = new SettingsPage();
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            SensorProvider = new SensorDataProvider();
         }
 
         public async Task SetUpFile()
@@ -127,11 +139,12 @@ namespace HypoxiaChamber
         /// <param name="e">Details about the launch request and process.</param>
         protected async override void OnLaunched(LaunchActivatedEventArgs e)
         {
-            SensorProvider = new SensorControl();       //Not original location (see App())
+            SensorProvider = new SensorDataProvider();       //Not original location (see App())
             await SetUpFile();
+            App.SensorProvider.MHZ16.Initialize();
             await App.SensorProvider.mcp3008.Initialize();
+            await App.SensorProvider.BME280.Initialize();
             SensorProvider.StartTimer();
-            //await App.SensorProvider.BMP280.Initialize();
             try
             {
                 PlantSettings = await SettingsPage.Load(FileNames.SettingsfileName);        //Weird auto-catch was generated somewhere RE load function

@@ -12,30 +12,31 @@ using HypoxiaChamber;
 namespace HypoxiaChamber
 {
     public delegate void DataReceivedEventHandler(object sender, SensorDataEventArgs e);
-    public class SensorControl
+    public class SensorDataProvider
     {
         const float ReferenceVoltage = 3.3F;                //5 or 3.3?
         public event DataReceivedEventHandler DataReceived;
         public MCP3008 mcp3008;
-
-        //Barometric Sensor
-        ////public BMP280 BMP280;
+        public BME280 BME280;
+        public MHZ16 MHZ16;
 
         // Values for which channels we will be using from the ADC chip
         const byte O2ADCChannel = 0;
-        const byte LightSensorADCChannel = 1;
-        const byte HighPotentiometerADCChannel = 2;
+        //const byte LightSensorADCChannel = 1;
+        //const byte HighPotentiometerADCChannel = 2;
 
         float currentO2;
+        float currentCO2;
 
         private Timer SampleTimer;
         private Timer writeToFile;
         Random rand = new Random();
 
-        public SensorControl()
+        public SensorDataProvider()
         {
             mcp3008 = new MCP3008(ReferenceVoltage);
-            ////BMP280 = new BMP280();
+            BME280 = new BME280();
+            MHZ16 = new MHZ16();
             //StartTimer();
         }
 
@@ -43,7 +44,7 @@ namespace HypoxiaChamber
         {
             SampleTimer = new Timer(TimerCallback, this, 1000, 1000);    //1000ms period
             Debug.WriteLine("SampleTimer Initialize");
-            writeToFile = new Timer(WriteToFileTimerCallback, this, 25000, 1000);     //2500ms startup delay, 1000ms period
+            //writeToFile = new Timer(WriteToFileTimerCallback, this, 25000, 1000);     //2500ms startup delay, 1000ms period
             Debug.WriteLine("WriteTimer Initialize");
         }
         private async void WriteToFileTimerCallback(object state)
@@ -78,30 +79,57 @@ namespace HypoxiaChamber
          * This method records on a SampleTimer the data measured by the temperature, brightness, and soil moisture sensor,
          * then organizes all of the information collected.  
          * */
-        private void TimerCallback(object state)                //ASYNCH with BMP I2C sensor
+        private async void TimerCallback(object state)                //ASYNCH with BME I2C sensor
         {
             //ensures that the temperature sensor is initialized before it is measured from
-            ////if (BMP280 == null)
-            ////{
-            ////    Debug.WriteLine("BMP280 is null");
-            ////}
-            ////else
-            ////{
-            ////    //receives the value from the temperature sensor and saves 
-            ////    //the data in the SensorDataEventArgs class, which holds
-            ////    //the sensor name, the data point, and the time the value was measured.
-            ////    //this data is then sent back to the main page and the UI is adjusted based
-            ////    //off of the measurement. 
-            ////    //float currentTemperature = (float) rand.NextDouble() * 10;
-            ////    float currentTemperature = await BMP280.ReadTemperature();
-            ////    var tempArgs = new SensorDataEventArgs()
-            ////    {
-            ////        SensorName = "Temperature",
-            ////        SensorValue = currentTemperature,
-            ////        Timestamp = DateTime.Now
-            ////    };
-            ////    OnDataReceived(tempArgs);
-            ////}
+            if (BME280 == null)
+            {
+                Debug.WriteLine("BME280 is null");
+            }
+            else
+            {
+                //receives the value from the temperature sensor and saves 
+                //the data in the SensorDataEventArgs class, which holds
+                //the sensor name, the data point, and the time the value was measured.
+                //this data is then sent back to the main page and the UI is adjusted based
+                //off of the measurement. 
+                //float currentTemperature = (float) rand.NextDouble() * 10;
+                float currentTemperature = await BME280.ReadTemperature();
+                var tempArgs = new SensorDataEventArgs()
+                {
+                    SensorName = "Temperature",
+                    SensorValue = currentTemperature*(9/5)+32,
+                    Timestamp = DateTime.Now
+                };
+                OnDataReceived(tempArgs);
+
+                float currentPressure = await BME280.ReadPressure();
+                var pressureArgs = new SensorDataEventArgs()
+                {
+                    SensorName = "Pressure",
+                    SensorValue = currentPressure,
+                    Timestamp = DateTime.Now
+                };
+                OnDataReceived(pressureArgs);
+
+                float currentHumidity = await BME280.ReadHumidity();
+                var humidityArgs = new SensorDataEventArgs()
+                {
+                    SensorName = "Humidity",
+                    SensorValue = currentHumidity,
+                    Timestamp = DateTime.Now
+                };
+                OnDataReceived(humidityArgs);
+
+                //float currentAltitude = await BME280.ReadAltitude(seaLevel);
+                //var altitudeArgs = new SensorDataEventArgs()
+                //{
+                //    SensorName = "Altitude",
+                //    SensorValue = currentAltitude,
+                //    Timestamp = DateTime.Now
+                //};
+                //OnDataReceived(altitudeArgs);
+            }
 
             //MCP3008 is an ADC and checks to see if this is initialized. 
             //the soil moisture sensor and the photocell are on different channels of the ADC
@@ -112,28 +140,13 @@ namespace HypoxiaChamber
             }
             else
             {
-                Debug.WriteLine("SensorTimerCall");
-                //The first line reads a value from the ADC from the photo cell sensor usually between 0 and 1023. 
-                //then the second line maps this number to a voltage that represents this number 
-                ////int LSReadVal = mcp3008.ReadADC(LightSensorADCChannel);
-                ////float LSVoltage = mcp3008.ADCToVoltage(LSReadVal);
-
-                //float currentBrightness = (float)rand.NextDouble() * 10; 
-                ////float currentBrightness = LSVoltage;
-                ////var brightnessArgs = new SensorDataEventArgs()
-                ////{
-                ////    SensorName = "Brightness",
-                ////    SensorValue = currentBrightness,
-                ////    Timestamp = DateTime.Now
-                ////};
-                ////OnDataReceived(brightnessArgs);
-
-                //float currentO2 = (float)rand.NextDouble() * 10;
+                ////Debug.WriteLine("O2Call");
+               
                 currentO2 = mcp3008.ReadADC(O2ADCChannel);
                 
                 currentO2 = (currentO2 * (3300.0F / 1024.0F)) / 132F;    // Change characteristic EQ based on Sensor 
                 //  3300mV/132 = 25(%) for a full high signal
-                Debug.WriteLine(currentO2);
+                ////Debug.WriteLine(currentO2);
                 var O2Args = new SensorDataEventArgs()
                 {
                     SensorName = "O2",
@@ -142,6 +155,24 @@ namespace HypoxiaChamber
                 };
                 OnDataReceived(O2Args);
                 
+            }
+
+            if(MHZ16 == null)
+            {
+                Debug.WriteLine("MHZ16 is null");
+                return;
+            }
+            else
+            {
+                currentCO2 = (float)(MHZ16.ReadCO2());
+
+                var CO2Args = new SensorDataEventArgs()
+                {
+                    SensorName = "CO2",
+                    SensorValue = currentCO2,
+                    Timestamp = DateTime.Now
+                };
+                OnDataReceived(CO2Args);
             }
         }
 

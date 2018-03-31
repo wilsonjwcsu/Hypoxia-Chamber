@@ -8,11 +8,8 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <!--<Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="3*"/>
-        </Grid.RowDefinitions>-->
 
+        <!--Command Bar-->
         <CommandBar Background="#323232" BorderBrush="#ffffff" FontFamily="Segoe UI">
             <AppBarButton Icon="Home" Label="Home" Foreground="#ffffff" Click="HomeViewButton_Click"/>
             <AppBarButton Icon="ThreeBars" Label="Trends" Foreground="#ffffff" Click="TrendsButton_Click"/>
@@ -22,30 +19,76 @@
             <AppBarButton Icon="Setting" Label="Settings" Foreground="#ffffff" Click="SettingsPageButton_Click"/>
             <AppBarButton Icon="Help" Label="Help" Foreground="#ffffff" Click="HelpPageButton_Click"/>
         </CommandBar>
+        <!--Title-->
         <TextBlock HorizontalAlignment="Left" Height="52" Margin="11,-1,0,0" Text="System Overview" TextWrapping="Wrap" VerticalAlignment="Top" Width="282" FontSize="36" Foreground="White"/>
 
-        <SymbolIcon Symbol="Clock" Margin="7,61,769,318"/>
-        <SymbolIcon Symbol="CalendarDay" Margin="6,89,770,289" Grid.RowSpan="2"/>
-        <TextBlock x:Name="ControlPanelTime" HorizontalAlignment="Center" Height="38" Margin="31,61,637,0" Text="*Current_Time*" TextWrapping="Wrap" VerticalAlignment="Top" Width="132" FontStyle="Italic"/>
-        <TextBlock x:Name="ControlPanelDate" HorizontalAlignment="Center" Height="38" Margin="34,88,634,0" Text="*Current_Date*" TextWrapping="Wrap" VerticalAlignment="Top" Width="132" FontStyle="Italic" Grid.RowSpan="2"/>
+        <!--System Status Sidebar-->
+        <SymbolIcon Symbol="Clock" Margin="10,117,766,340" RenderTransformOrigin="0.5,0.5">
+            <SymbolIcon.RenderTransform>
+                <CompositeTransform ScaleX="1.5" ScaleY="1.5"/>
+            </SymbolIcon.RenderTransform>
+        </SymbolIcon>
+        <SymbolIcon Symbol="CalendarDay" Margin="10,165,766,288" RenderTransformOrigin="0.5,0.5">
+            <SymbolIcon.RenderTransform>
+                <CompositeTransform ScaleX="1.5" ScaleY="1.5"/>
+            </SymbolIcon.RenderTransform>
+        </SymbolIcon>
+        <SymbolIcon x:Name="Status_Symbol" Symbol="Accept" Margin="2,52,757,393" RenderTransformOrigin="0.5,0.5" Foreground="#FF17F729">
+            <SymbolIcon.RenderTransform>
+                <CompositeTransform ScaleX="1.5" ScaleY="1.5"/>
+            </SymbolIcon.RenderTransform>
+        </SymbolIcon>
+        <TextBlock HorizontalAlignment="Left" Height="28" Margin="41,163,0,0" Text="Date:" TextWrapping="Wrap" VerticalAlignment="Top" Width="99"/>
+        <TextBlock HorizontalAlignment="Left" Height="28" Margin="41,109,0,0" Text="Time:" TextWrapping="Wrap" VerticalAlignment="Top" Width="99"/>
+        <Rectangle HorizontalAlignment="Left" Height="16" Margin="0,88,0,0" VerticalAlignment="Top" Width="800" Fill="Black"/>
+        <Rectangle HorizontalAlignment="Left" Height="156" Margin="210,48,0,0" VerticalAlignment="Top" Width="21" Fill="Black"/>
 
+        <!--Sequence Status-->
+        <SymbolIcon Symbol="SlideShow" Margin="242,117,534,339" RenderTransformOrigin="0.5,0.5">
+            <SymbolIcon.RenderTransform>
+                <CompositeTransform ScaleX="1.5" ScaleY="1.5"/>
+            </SymbolIcon.RenderTransform>
+        </SymbolIcon>
+        <SymbolIcon Symbol="StopSlideShow" Margin="242,169,534,289" RenderTransformOrigin="0.5,0.5">
+            <SymbolIcon.RenderTransform>
+                <CompositeTransform ScaleX="1.5" ScaleY="1.5"/>
+            </SymbolIcon.RenderTransform>
+        </SymbolIcon>
+        <SymbolIcon Symbol="Rotate" Margin="242,58,534,396" RenderTransformOrigin="0.5,0.5">
+            <SymbolIcon.RenderTransform>
+                <CompositeTransform ScaleX="1.5" ScaleY="1.5"/>
+            </SymbolIcon.RenderTransform>
+        </SymbolIcon>
+        <TextBlock x:Name="ControlPanelStatus" HorizontalAlignment="Center" Height="23" Margin="41,58,559,0" Text="System Standby" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" FontStyle="Normal" Foreground="#FF98A317" FontWeight="Bold" TextDecorations="Underline" FontSize="18"/>
+        <TextBlock x:Name="ControlPanelTime" HorizontalAlignment="Center" Height="23" Margin="40,129,628,0" Text="*Current_Time*" TextWrapping="Wrap" VerticalAlignment="Top" Width="132" FontStyle="Italic"/>
+        <TextBlock x:Name="ControlPanelDate" HorizontalAlignment="Center" Height="26" Margin="41,178,627,0" Text="*Current_Date*" TextWrapping="Wrap" VerticalAlignment="Top" Width="132" FontStyle="Italic"/>
+        <TextBlock x:Name="LoadedProgramName" HorizontalAlignment="Center" Height="26" Margin="273,58,340,0" Text="No Sequence Loaded" TextWrapping="Wrap" VerticalAlignment="Top" Width="187" FontStyle="Normal" TextDecorations="Underline" FontWeight="Bold"/>
+        <TextBlock x:Name="ElapsedTime_Txt" HorizontalAlignment="Center" Height="26" Margin="273,126,395,0" Text="*Elapsed Time*" TextWrapping="Wrap" VerticalAlignment="Top" Width="132" FontStyle="Normal"/>
+        <TextBlock x:Name="RemainingTime_Txt" HorizontalAlignment="Center" Height="26" Margin="273,178,395,0" Text="*Remaining Time*" TextWrapping="Wrap" VerticalAlignment="Top" Width="132" FontStyle="Normal"/>
+
+        <ProgressBar Margin="479,152,0,276" Height="52" IsIndeterminate="True" Value="57" Foreground="#FF10FF0A"/>
+        <CommandBar Margin="479,104,0,0" IsEnabled="True">
+            <AppBarButton Icon="SaveLocal" Label="Sequence" Click="AppBarButton_Click"/>
+            <AppBarButton Icon="Stop" Label="Stop" Click="AppBarButton_Click"/>
+            <AppBarButton Icon="Pause" Label="Pause" Click="AppBarButton_Click"/>
+            <AppBarButton Icon="Play" Label="Play" Click="AppBarButton_Click"/>
+        </CommandBar>
+
+        <!--Divider Bar-->
+        <Rectangle HorizontalAlignment="Left" Height="10" Margin="0,204,0,0" VerticalAlignment="Top" Width="800" Fill="#FF020202"/>
 
         <!--Oxygen Gauge & Controls-->
-        <Custom:RadialGauge x:Name="O2Gauge" Height="200" Margin="9,153,591,0" VerticalAlignment="Top" Width="200" 
+        <Custom:RadialGauge x:Name="O2Gauge" Height="200" Margin="9,227,591,0" VerticalAlignment="Top" Width="200" 
             Value="20" Minimum="0" Maximum="25" TickSpacing="5" ScaleWidth="25" Unit="% O2"
             TickBrush="Gainsboro" ScaleTickBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}" UnitBrush="DarkSlateGray" ValueBrush="Black" NeedleWidth="5" 
-            TickLength="15" TrailBrush="#FF00FFF3" ScaleBrush="Cyan"/>
-        <Button Content="O2 Concentration" HorizontalAlignment="Left" Height="38" Margin="9,353,0,0" VerticalAlignment="Top" Width="200" FontSize="20" Click="GoTo_O2Focus" Background="Cyan"/>
+            TickLength="15" TrailBrush="Cyan" ScaleBrush="LightGray"/>
+        <Button Content="O2 Concentration" HorizontalAlignment="Left" Height="38" Margin="9,432,0,0" VerticalAlignment="Top" Width="200" FontSize="20" Click="GoTo_O2Focus" Background="Cyan"/>
 
-        <!--Oxygen Gauge & Controls-->
-        <Custom:RadialGauge x:Name="CO2Gauge" Height="200" Margin="218,153,592,0" VerticalAlignment="Top" Width="200" 
-            Value="20" Minimum="0" Maximum="25" TickSpacing="5" ScaleWidth="25" Unit="PPM"
-            TickBrush="Gainsboro" ScaleTickBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}" UnitBrush="DarkSlateGray" ValueBrush="Black" NeedleWidth="5" 
-            TickLength="15" TrailBrush="#FF00FFF3" ScaleBrush="OliveDrab" Grid.Row="1"/>
-        <Button Content="CO2 Concentration" HorizontalAlignment="Left" Height="38" Margin="219,353,0,0" VerticalAlignment="Top" Width="200" FontSize="20" Click="GoTo_CO2Focus" Background="OliveDrab"/>
-        <Rectangle HorizontalAlignment="Left" Height="10" Margin="0,122,0,0" VerticalAlignment="Top" Width="800" Fill="#FF020202"/>
-       
-
+        <!--CO2 Gauge & Controls-->
+        <Button Content="CO2 Concentration" HorizontalAlignment="Left" Height="38" Margin="219,432,0,0" VerticalAlignment="Top" Width="200" FontSize="20" Click="GoTo_CO2Focus" Background="OliveDrab"/>
+        <Custom:RadialGauge x:Name="CO2Gauge" HorizontalAlignment="Left" Height="200" Margin="219,227,0,0" VerticalAlignment="Top" Width="200"  TickBrush="Gainsboro" ScaleTickBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+            TickLength="15" TrailBrush="OliveDrab" ScaleBrush="LightGray" Value="250" Minimum="200" Maximum="1200" TickSpacing="200" ScaleWidth="25" Unit="PPM" UnitBrush="DarkSlateGray" ValueBrush="Black" NeedleWidth="5"/>
+        <TextBlock x:Name="Temp_Txt" HorizontalAlignment="Left" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Margin="479,227,0,0" Height="56" Width="268"/>
 
     </Grid>
 </Page>
