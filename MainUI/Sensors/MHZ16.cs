@@ -181,13 +181,13 @@ namespace HypoxiaChamber
 
                 Debug.WriteLine("Commnication Error.");
                 //return false;
-                return (900);
+                return (999999);
             }
             catch (Exception ex)
             {
                 Debug.WriteLine("Commnication Error: " + ex.Message);
                 //return false;
-                return (999);
+                return (999999);
             }
         }
 

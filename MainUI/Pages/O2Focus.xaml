@@ -24,7 +24,7 @@
             Value="20" Minimum="0" Maximum="25" TickSpacing="5" ScaleWidth="25" Unit="%O2"
             TickBrush="Gainsboro" ScaleTickBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}" UnitBrush="DarkSlateGray" ValueBrush="Black" NeedleWidth="5" 
             TickLength="15" TrailBrush="#FF00FFF3" ScaleBrush="#3300706B" FontFamily="Segoe UI"/>
-        <Slider x:Name="O2_SampleFreq" HorizontalAlignment="Left" Margin="333,340,0,0" VerticalAlignment="Top" Maximum="10" Minimum="1" LargeChange="1" SmallChange="1" TickFrequency="1" Value="0.1" Width="221" TickPlacement="Outside" ValueChanged="O2_SampleFreq_ValueChanged"/>
+        <Slider x:Name="O2_SampleFreq" HorizontalAlignment="Left" Margin="333,340,0,0" VerticalAlignment="Top" Maximum="10" Minimum="1" LargeChange="1" SmallChange="1" TickFrequency="1" Value="0.1" Width="221" TickPlacement="Outside"/>
         <TextBlock HorizontalAlignment="Left" Height="48" Margin="218,40,0,0" Text="Oxygen Sensing Controls" TextWrapping="Wrap" VerticalAlignment="Top" Width="423" FontSize="36" TextAlignment="Center"/>
         <TextBlock HorizontalAlignment="Left" Height="24" Margin="373,310,0,0" Text="Sampling Period" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" TextAlignment="Center"/>
         <TextBlock x:Name="TxtHeader" HorizontalAlignment="Left" Margin="116,290,0,0" Text="Value" TextWrapping="Wrap" VerticalAlignment="Top"/>

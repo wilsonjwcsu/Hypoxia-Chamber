@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:HypoxiaChamber.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:Custom="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
@@ -19,6 +20,17 @@
             <AppBarButton Icon="Help" Label="Help" Foreground="#ffffff" Click="HelpPageButton_Click"/>
         </CommandBar>
         <TextBlock HorizontalAlignment="Left" Height="52" Margin="11,-1,0,0" Text="Atmostphere" TextWrapping="Wrap" VerticalAlignment="Top" Width="282" FontSize="36" Foreground="White"/>
+
+        <!--Atmostphere Gauges-->
+        <Custom:RadialGauge x:Name="Temp_Gauge" Height="100" Margin="419,215,261,0" VerticalAlignment="Top"  TickBrush="Gainsboro" ScaleTickBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+            TickLength="5" TrailBrush="OrangeRed" ScaleBrush="LightGray" Value="250" Minimum="50" Maximum="100" TickSpacing="200" ScaleWidth="25" Unit="Deg. F" UnitBrush="DarkSlateGray" ValueBrush="Black" NeedleWidth="5"/>
+        <Custom:RadialGauge x:Name="Humid_Gauge" Height="100" Margin="544,215,124,0" VerticalAlignment="Top"  TickBrush="Gainsboro" ScaleTickBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+            TickLength="5" TrailBrush="CornflowerBlue" ScaleBrush="LightGray" Value="250" Minimum="50" Maximum="100" TickSpacing="200" ScaleWidth="25" Unit="% Sat." UnitBrush="DarkSlateGray" ValueBrush="Black" NeedleWidth="5"/>
+        <Custom:RadialGauge x:Name="Pres_Gauge" Height="100" Margin="681,215,1,0" VerticalAlignment="Top"  TickBrush="Gainsboro" ScaleTickBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+            TickLength="5" TrailBrush="#FF13B664" ScaleBrush="LightGray" Value="250" Minimum="50" Maximum="100" TickSpacing="200" ScaleWidth="25" Unit="kPa" UnitBrush="DarkSlateGray" ValueBrush="Black" NeedleWidth="5"/>
+        <Button x:Name="Temp_Btn" Content="Temperature" Background="OrangeRed" HorizontalAlignment="Left" Height="32" Margin="419,316,0,0" VerticalAlignment="Top" Width="120" />
+        <Button x:Name="Humid_Btn" Content="Humidity" Background="CornflowerBlue" HorizontalAlignment="Left" Height="32" Margin="544,316,0,0" VerticalAlignment="Top" Width="132" />
+        <Button x:Name="Pressure_Btn" Content="Pressure" Background="#FF13B664" HorizontalAlignment="Left" Height="32" Margin="681,316,0,0" VerticalAlignment="Top" Width="118" />
 
     </Grid>
 </Page>

@@ -146,7 +146,8 @@ namespace HypoxiaChamber
                     await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     {
                         currentTemperature = e.SensorValue;
-                        Temp_Txt.Text = string.Format("{0:0,0.00}", currentTemperature);
+                        Temp_Gauge.Value = currentTemperature;
+                        //Temp_Txt.Text = string.Format("{0:0,0.00}", currentTemperature);
                         App.TemperatureList.Add(nextValue);
                     });
                     break;
@@ -154,6 +155,7 @@ namespace HypoxiaChamber
                     await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     {
                         currentPressure = e.SensorValue;
+                        Pres_Gauge.Value = currentPressure;
                         //App.PressureList.Add(nextValue);
                     });
                     break;
@@ -161,6 +163,7 @@ namespace HypoxiaChamber
                     await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     {
                         currentHumidity = e.SensorValue;
+                        Humid_Gauge.Value = currentHumidity;
                         //App.HumidityList.Add(nextValue);
                     });
                     break;
@@ -261,6 +264,15 @@ namespace HypoxiaChamber
         {
 
         }
-                
+
+        private void Atm_Btn_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(AtmosphereFocus));
+        }
+
+        private void AirFlow_Btn_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(AirflowFocus));
+        }
     }
 }

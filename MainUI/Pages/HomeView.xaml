@@ -20,7 +20,6 @@
             <AppBarButton Icon="Help" Label="Help" Foreground="#ffffff" Click="HelpPageButton_Click"/>
         </CommandBar>
         <!--Title-->
-        <TextBlock HorizontalAlignment="Left" Height="52" Margin="11,-1,0,0" Text="System Overview" TextWrapping="Wrap" VerticalAlignment="Top" Width="282" FontSize="36" Foreground="White"/>
 
         <!--System Status Sidebar-->
         <SymbolIcon Symbol="Clock" Margin="10,117,766,340" RenderTransformOrigin="0.5,0.5">
@@ -63,8 +62,8 @@
         <TextBlock x:Name="ControlPanelTime" HorizontalAlignment="Center" Height="23" Margin="40,129,628,0" Text="*Current_Time*" TextWrapping="Wrap" VerticalAlignment="Top" Width="132" FontStyle="Italic"/>
         <TextBlock x:Name="ControlPanelDate" HorizontalAlignment="Center" Height="26" Margin="41,178,627,0" Text="*Current_Date*" TextWrapping="Wrap" VerticalAlignment="Top" Width="132" FontStyle="Italic"/>
         <TextBlock x:Name="LoadedProgramName" HorizontalAlignment="Center" Height="26" Margin="273,58,340,0" Text="No Sequence Loaded" TextWrapping="Wrap" VerticalAlignment="Top" Width="187" FontStyle="Normal" TextDecorations="Underline" FontWeight="Bold"/>
-        <TextBlock x:Name="ElapsedTime_Txt" HorizontalAlignment="Center" Height="26" Margin="273,126,395,0" Text="*Elapsed Time*" TextWrapping="Wrap" VerticalAlignment="Top" Width="132" FontStyle="Normal"/>
-        <TextBlock x:Name="RemainingTime_Txt" HorizontalAlignment="Center" Height="26" Margin="273,178,395,0" Text="*Remaining Time*" TextWrapping="Wrap" VerticalAlignment="Top" Width="132" FontStyle="Normal"/>
+        <TextBlock x:Name="ElapsedTime_Txt" HorizontalAlignment="Center" Height="26" Margin="273,116,395,0" Text="*Elapsed Time*" TextWrapping="Wrap" VerticalAlignment="Top" Width="132" FontStyle="Normal"/>
+        <TextBlock x:Name="RemainingTime_Txt" HorizontalAlignment="Center" Height="26" Margin="273,166,395,0" Text="*Remaining Time*" TextWrapping="Wrap" VerticalAlignment="Top" Width="132" FontStyle="Normal"/>
 
         <ProgressBar Margin="479,152,0,276" Height="52" IsIndeterminate="True" Value="57" Foreground="#FF10FF0A"/>
         <CommandBar Margin="479,104,0,0" IsEnabled="True">
@@ -78,17 +77,48 @@
         <Rectangle HorizontalAlignment="Left" Height="10" Margin="0,204,0,0" VerticalAlignment="Top" Width="800" Fill="#FF020202"/>
 
         <!--Oxygen Gauge & Controls-->
-        <Custom:RadialGauge x:Name="O2Gauge" Height="200" Margin="9,227,591,0" VerticalAlignment="Top" Width="200" 
+        <Custom:RadialGauge x:Name="O2Gauge" Height="200" Margin="0,225,600,0" VerticalAlignment="Top" Width="200" 
             Value="20" Minimum="0" Maximum="25" TickSpacing="5" ScaleWidth="25" Unit="% O2"
             TickBrush="Gainsboro" ScaleTickBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}" UnitBrush="DarkSlateGray" ValueBrush="Black" NeedleWidth="5" 
             TickLength="15" TrailBrush="Cyan" ScaleBrush="LightGray"/>
-        <Button Content="O2 Concentration" HorizontalAlignment="Left" Height="38" Margin="9,432,0,0" VerticalAlignment="Top" Width="200" FontSize="20" Click="GoTo_O2Focus" Background="Cyan"/>
+        <Button Content="O2 Concentration" HorizontalAlignment="Left" Height="38" Margin="0,440,0,0" VerticalAlignment="Top" Width="203" FontSize="20" Click="GoTo_O2Focus" Background="Cyan"/>
 
         <!--CO2 Gauge & Controls-->
-        <Button Content="CO2 Concentration" HorizontalAlignment="Left" Height="38" Margin="219,432,0,0" VerticalAlignment="Top" Width="200" FontSize="20" Click="GoTo_CO2Focus" Background="OliveDrab"/>
-        <Custom:RadialGauge x:Name="CO2Gauge" HorizontalAlignment="Left" Height="200" Margin="219,227,0,0" VerticalAlignment="Top" Width="200"  TickBrush="Gainsboro" ScaleTickBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+        <Button Content="CO2 Concentration" HorizontalAlignment="Left" Height="38" Margin="203,440,0,0" VerticalAlignment="Top" Width="204" FontSize="20" Click="GoTo_CO2Focus" Background="OliveDrab"/>
+        <Custom:RadialGauge x:Name="CO2Gauge" HorizontalAlignment="Left" Height="200" Margin="203,225,0,0" VerticalAlignment="Top" Width="200"  TickBrush="Gainsboro" ScaleTickBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}"
             TickLength="15" TrailBrush="OliveDrab" ScaleBrush="LightGray" Value="250" Minimum="200" Maximum="1200" TickSpacing="200" ScaleWidth="25" Unit="PPM" UnitBrush="DarkSlateGray" ValueBrush="Black" NeedleWidth="5"/>
-        <TextBlock x:Name="Temp_Txt" HorizontalAlignment="Left" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Margin="479,227,0,0" Height="56" Width="268"/>
+        <Rectangle HorizontalAlignment="Left" Height="266" Margin="407,214,0,0" VerticalAlignment="Top" Width="11" Fill="Black"/>
+        <Rectangle HorizontalAlignment="Left" Height="6" Margin="418,349,0,0" VerticalAlignment="Top" Width="382" Fill="Black"/>
+
+        <!--Atmostphere Gauges-->
+        <Custom:RadialGauge x:Name="Temp_Gauge" Height="100" Margin="419,215,261,0" VerticalAlignment="Top"  TickBrush="Gainsboro" ScaleTickBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+            TickLength="5" TrailBrush="OrangeRed" ScaleBrush="LightGray" Value="250" Minimum="50" Maximum="100" TickSpacing="10" ScaleWidth="25" Unit="Deg. F" UnitBrush="DarkSlateGray" ValueBrush="Black" NeedleWidth="5"/>
+        <Custom:RadialGauge x:Name="Humid_Gauge" Height="100" Margin="544,215,124,0" VerticalAlignment="Top"  TickBrush="Gainsboro" ScaleTickBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+            TickLength="5" TrailBrush="CornflowerBlue" ScaleBrush="LightGray" Value="250" Minimum="0" Maximum="100" TickSpacing="20" ScaleWidth="25" Unit="% Sat." UnitBrush="DarkSlateGray" ValueBrush="Black" NeedleWidth="5"/>
+        <Custom:RadialGauge x:Name="Pres_Gauge" Height="100" Margin="681,215,1,0" VerticalAlignment="Top"  TickBrush="Gainsboro" ScaleTickBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+            TickLength="5" TrailBrush="#FF13B664" ScaleBrush="LightGray" Value="250" Minimum="0" Maximum="175" TickSpacing="35" ScaleWidth="25" Unit="kPa" UnitBrush="DarkSlateGray" ValueBrush="Black" NeedleWidth="5"/>
+        <Button x:Name="Temp_Btn" Content="Temperature" Background="OrangeRed" HorizontalAlignment="Left" Height="32" Margin="419,316,0,0" VerticalAlignment="Top" Width="125" Click="Atm_Btn_Click"/>
+        <Button x:Name="Humid_Btn" Content="Humidity" Background="CornflowerBlue" HorizontalAlignment="Left" Height="32" Margin="544,316,0,0" VerticalAlignment="Top" Width="132" Click="Atm_Btn_Click"/>
+        <Button x:Name="Pressure_Btn" Content="Pressure" Background="#FF13B664" HorizontalAlignment="Left" Height="32" Margin="676,316,0,0" VerticalAlignment="Top" Width="123" Click="Atm_Btn_Click"/>
+
+        <!--Airflow Gauges-->
+        <Custom:RadialGauge x:Name="OAD_Gauge" Height="95" Margin="419,355,286,0" VerticalAlignment="Top"  TickBrush="Gainsboro" ScaleTickBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+            TickLength="5" TrailBrush="Goldenrod" ScaleBrush="LightGray" Value="25" Minimum="0" Maximum="100" TickSpacing="20" ScaleWidth="25" Unit="% Open" UnitBrush="DarkSlateGray" ValueBrush="Black" NeedleWidth="5"/>
+        <Custom:RadialGauge x:Name="EAD_Gauge" Height="95" Margin="514,355,191,0" VerticalAlignment="Top"  TickBrush="Gainsboro" ScaleTickBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+            TickLength="5" TrailBrush="DarkGoldenrod" ScaleBrush="LightGray" Value="25" Minimum="0" Maximum="100" TickSpacing="20" ScaleWidth="25" Unit="% Open" UnitBrush="DarkSlateGray" ValueBrush="Black" NeedleWidth="5"/>
+        <Custom:RadialGauge x:Name="SF_Gauge" Height="95" Margin="609,355,96,0" VerticalAlignment="Top"  TickBrush="Gainsboro" ScaleTickBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+            TickLength="5" TrailBrush="Violet" ScaleBrush="LightGray" Value="50" Minimum="0" Maximum="100" TickSpacing="20" ScaleWidth="25" Unit="%" UnitBrush="DarkSlateGray" ValueBrush="Black" NeedleWidth="5"/>
+        <Custom:RadialGauge x:Name="RF_Gauge" Height="95" Margin="704,355,1,0" VerticalAlignment="Top"  TickBrush="Gainsboro" ScaleTickBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+            TickLength="5" TrailBrush="BlueViolet" ScaleBrush="LightGray" Value="75" Minimum="0" Maximum="100" TickSpacing="20" ScaleWidth="25" Unit="%" UnitBrush="DarkSlateGray" ValueBrush="Black" NeedleWidth="5"/>
+        <Button Content="Supply" Background="Goldenrod" HorizontalAlignment="Left" Height="33" Margin="419,450,0,-3" VerticalAlignment="Top" Width="95" FontSize="12" FontFamily="Segoe UI" Click="AirFlow_Btn_Click"/>
+        <Button Content="Exhaust" Background="DarkGoldenrod" HorizontalAlignment="Left" Height="33" Margin="514,450,0,-3" VerticalAlignment="Top" Width="95" FontSize="12" FontFamily="Segoe UI" Click="AirFlow_Btn_Click"/>
+        <Button Content="Supply" Background="Violet" HorizontalAlignment="Left" Height="33" Margin="609,450,0,-3" VerticalAlignment="Top" Width="95" FontSize="12" FontFamily="Segoe UI" Click="AirFlow_Btn_Click"/>
+        <Button Content="Circulation" Background="BlueViolet" HorizontalAlignment="Left" Height="33" Margin="704,450,0,-3" VerticalAlignment="Top" Width="96" FontSize="12" FontFamily="Segoe UI" Click="AirFlow_Btn_Click"/>
+        <TextBlock HorizontalAlignment="Left" Height="15" Margin="493,437,0,0" Text="Dampers" TextWrapping="Wrap" VerticalAlignment="Top" Width="42" FontSize="10"/>
+        <TextBlock HorizontalAlignment="Left" Height="15" Margin="693,437,0,0" Text="Fans" TextWrapping="Wrap" VerticalAlignment="Top" Width="24" FontSize="10"/>
+        <TextBlock HorizontalAlignment="Left" Height="52" Margin="11,-1,0,0" Text="System Overview" TextWrapping="Wrap" VerticalAlignment="Top" Width="282" FontSize="36" Foreground="White"/>
+
+
 
     </Grid>
 </Page>

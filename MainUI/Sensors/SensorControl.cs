@@ -107,7 +107,7 @@ namespace HypoxiaChamber
                 var pressureArgs = new SensorDataEventArgs()
                 {
                     SensorName = "Pressure",
-                    SensorValue = currentPressure,
+                    SensorValue = currentPressure / 1000, //into kPa (1hPa --> 0.1kPa)  ???
                     Timestamp = DateTime.Now
                 };
                 OnDataReceived(pressureArgs);
@@ -165,7 +165,10 @@ namespace HypoxiaChamber
             else
             {
                 currentCO2 = (float)(MHZ16.ReadCO2());
-
+                //if (currentCO2 == 999999f)
+                //{
+                //    //Add Some Method for restarting disconnected/reconnected i2c device
+                //}
                 var CO2Args = new SensorDataEventArgs()
                 {
                     SensorName = "CO2",
@@ -173,6 +176,9 @@ namespace HypoxiaChamber
                     Timestamp = DateTime.Now
                 };
                 OnDataReceived(CO2Args);
+               
+               
+
             }
         }
 

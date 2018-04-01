@@ -12,38 +12,24 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using Windows.Devices.Spi;
-using Windows.Devices.Enumeration;
 
-
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
+// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace HypoxiaChamber
 {
-    /// <summary>.
+    /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    ///
-
-    public sealed partial class O2Focus : Page
+    public sealed partial class AirflowFocus : Page
     {
-        public O2Focus()
+        public AirflowFocus()
         {
             this.InitializeComponent();
-            //this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
         }
-         
-
-        //private void O2_SampleFreq_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
-        //{
-        //    int sampleint = Convert.ToInt32(O2_SampleFreq.Value);
-        //    SampleRate = sampleint;
-        //}
-
 
         /**
-         * If the user presses the app-bar buttons, they will go to the appropriate pages
-         * */
+ * If the user presses the app-bar buttons, they will go to the appropriate pages
+ * */
         private void HomeViewButton_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(HomeView));
@@ -83,5 +69,4 @@ namespace HypoxiaChamber
 
         }
     }
-
 }
