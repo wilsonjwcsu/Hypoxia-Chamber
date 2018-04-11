@@ -168,14 +168,14 @@ namespace HypoxiaChamber
                         //App.HumidityList.Add(nextValue);
                     });
                     break;
-                    //case "Altitude":
-                    //    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                    //    {
-                    //        currentAltitude = e.SensorValue;
-                    //        App.AltitudeList.Add(nextValue);
-                    //    });
-                    //    break;
-
+                //case "Altitude":
+                //    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                //    {
+                //        currentAltitude = e.SensorValue;
+                //        App.AltitudeList.Add(nextValue);
+                //    });
+                //    break;
+                   
             }
         }
         private String FormatOfSensorValue(float value)
@@ -280,21 +280,11 @@ namespace HypoxiaChamber
         {
             App.GPIOController.StartButtonLight(true);
 
-            //string text = "SYSTEM ARMED--Press and hold physical start button to begin"; //create message box popup
+            string text = "SYSTEM ARMED--Press and hold physical start button to begin"; //create message box popup
 
 
-
-
-
-        }
-        private void AppBarButton_Stop_Click(object sender, RoutedEventArgs e)
-        {
-        }
-        private void AppBarButton_Pause_Click(object sender, RoutedEventArgs e)
-        {
-        }
-        private void AppBarButton_Load_Click(object sender, RoutedEventArgs e)
-        {
+            
+            
         }
     }
 }

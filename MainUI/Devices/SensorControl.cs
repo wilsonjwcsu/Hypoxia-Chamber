@@ -14,7 +14,7 @@ namespace HypoxiaChamber
     public delegate void DataReceivedEventHandler(object sender, SensorDataEventArgs e);
     public class SensorDataProvider
     {
-        const float ReferenceVoltage = 3.3F;                //5 or 3.3?
+        const float ReferenceVoltage = 3.3F;
         public event DataReceivedEventHandler DataReceived;
         public MCP3008 mcp3008;
         public BME280 BME280;

@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.Devices.Gpio;
 
 namespace HypoxiaChamber
 {
@@ -28,6 +29,8 @@ namespace HypoxiaChamber
     {
         //this helps find the data from the sensors
         public static SensorDataProvider SensorProvider;
+        public static HardwareDeviceController OutputController;
+        public static GPIODeviceCOntroller GPIOController;
 
         //these are the files that the app reads from for the sensors
         public static Windows.Storage.StorageFile BrightnessFile;
@@ -66,6 +69,8 @@ namespace HypoxiaChamber
         public static SettingsPage PlantSettings;
         public static SettingsPage TwitterSettings;
 
+
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -77,9 +82,13 @@ namespace HypoxiaChamber
             this.InitializeComponent();
             this.Suspending += OnSuspending;
             SensorProvider = new SensorDataProvider();
+            GPIOController = new GPIODeviceCOntroller();
+            GPIOController.InitGPIO();
         }
 
-        public async Task SetUpFile()
+
+
+            public async Task SetUpFile()
         {
             storageFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
             try
@@ -139,7 +148,9 @@ namespace HypoxiaChamber
         /// <param name="e">Details about the launch request and process.</param>
         protected async override void OnLaunched(LaunchActivatedEventArgs e)
         {
-            SensorProvider = new SensorDataProvider();       //Not original location (see App())
+            SensorProvider = new SensorDataProvider();
+            OutputController = new HardwareDeviceController();
+           
             await SetUpFile();
             App.SensorProvider.MHZ16.Initialize();
             await App.SensorProvider.mcp3008.Initialize();
@@ -224,5 +235,6 @@ namespace HypoxiaChamber
             //TODO: Save application state and stop any background activity
             deferral.Complete();
         }
+
     }
 }
