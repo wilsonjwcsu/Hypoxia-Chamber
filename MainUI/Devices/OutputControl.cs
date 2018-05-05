@@ -82,16 +82,16 @@ namespace HypoxiaChamber
 
     }
 
-    public class GPIODeviceCOntroller
+    public class GPIODeviceController
     {
         //GPIO Int
 
         public const int START_LED_PIN = 5;
         public const int STOP_LED_PIN = 6;
-        public const int START_BUTTON_PIN = 13;
-        public const int STOP_BUTTON_PIN = 19;
+        public const int START_BUTTON_PIN = 12;
+        public const int STOP_BUTTON_PIN = 13;
         public const int N2_C_PIN = 23;
-        public const int DOOR_S_PIN = 12;
+        public const int DOOR_S_PIN = 19;
         public const int LTG_C_PIN = 24;
         public GpioPin StartLEDPin;
         public GpioPin StopLEDPin;
@@ -106,7 +106,7 @@ namespace HypoxiaChamber
         private GpioPinValue N2PinValue = GpioPinValue.High;
         private GpioPinValue LTGPinValue = GpioPinValue.High;
 
-        public GPIODeviceCOntroller()
+        public GPIODeviceController()
         {
 
         }
@@ -173,6 +173,21 @@ namespace HypoxiaChamber
             StartButtonPin.ValueChanged += StartButtonPin_ValueChanged;
             StopButtonPin.ValueChanged += StopButtonPin_ValueChanged;
         }
+
+        public void N2_Com(bool Command)
+        {
+            if (Command == true)
+            {
+                N2Pin.Write(GpioPinValue.High);
+                return;
+            }
+            else if (Command == false)
+            {
+                N2Pin.Write(GpioPinValue.Low);
+                return;
+            }
+        }
+
         private void StopButtonPin_ValueChanged(GpioPin sender, GpioPinValueChangedEventArgs e)
         {
             // toggle the state of the LED every time the button is pressed
@@ -214,6 +229,21 @@ namespace HypoxiaChamber
             if (value == true)
             {
                 StartLEDPin.Write(GpioPinValue.High);
+            }
+            else
+            {
+                StartLEDPin.Write(GpioPinValue.Low);
+            }
+        }
+        public void StopButtonLight(bool value)
+        {
+            if (value == true)
+            {
+                StopLEDPin.Write(GpioPinValue.High);
+            }
+            else
+            {
+                StopLEDPin.Write(GpioPinValue.Low);
             }
         }
     }

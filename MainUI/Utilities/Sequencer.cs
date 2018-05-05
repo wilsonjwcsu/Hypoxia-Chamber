@@ -27,12 +27,15 @@ namespace HypoxiaChamber
 
         double O2_val;
         double O2_sp = 10;
+        const double O2_DB = 0.1;
         double CO2_val;
         double CO2_sp;
+        const double CO2_DB = 150;
         double Temp_val;
         double Hum_val;
         double Pres_val;
 
+        public bool N2_C_OverRide = false;
         bool N2_C;
         bool LTG_C;
         int OAD_O;
@@ -40,13 +43,14 @@ namespace HypoxiaChamber
         int EAD_O;
         int RF_O;
 
-
+        private Timer SequenceValidateTimer;
 
         public Sequencer() 
         {
 
             App.OutputController.ServoRotate(3, 0);
             App.OutputController.ServoRotate(4, 0);
+            App.GPIOController.N2_Com(N2_C = false);
 
         }
 
@@ -69,9 +73,43 @@ namespace HypoxiaChamber
             //load list into new list with current time offsets for each phase of program
 
             //temporary solution below--load the single value set from UI on the sequencing page
-
+            //HomeView.Status_Bar.IsIndeterminate = true;
             App.GPIOController.StartButtonLight(true);
+            //popup confimation message
 
+            SequenceValidateTimer = new Timer(SequenceRuntime, this, 1000, 5000);    //1000ms period
+
+        }
+
+        void SequenceRuntime(object state)
+        {
+            if (N2_C_OverRide == true)
+            {
+                return;
+            }
+
+            if (N2_C == true)
+            {
+                if (O2_val <= O2_sp)
+                {
+                    N2_C = false;
+                    App.GPIOController.N2_Com(N2_C);
+                    return;
+                }
+                
+            }
+            else if (N2_C == false)
+            {
+                if(O2_val > (O2_sp + O2_DB))
+                {
+                    N2_C = true;
+                    App.GPIOController.N2_Com(N2_C);
+                    return;
+                }
+            }
+            
+            //integrate CO2 sequenceing
+                
         }
 
         private void SequenceEditor_DataReceived(object sender, SequenceDataArgs e)

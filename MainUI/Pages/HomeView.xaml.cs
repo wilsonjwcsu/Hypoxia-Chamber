@@ -68,6 +68,7 @@ namespace HypoxiaChamber
         //public static float currentAltitude;
         public static float currentO2;
         public static float currentCO2;
+        public static string Status = "Standby";
 
         /**
          * sets all of the variables that were described above
@@ -296,5 +297,6 @@ namespace HypoxiaChamber
         private void AppBarButton_Load_Click(object sender, RoutedEventArgs e)
         {
         }
+
     }
 }

@@ -65,7 +65,7 @@
         <TextBlock x:Name="ElapsedTime_Txt" HorizontalAlignment="Center" Height="26" Margin="273,116,395,0" Text="*Elapsed Time*" TextWrapping="Wrap" VerticalAlignment="Top" Width="132" FontStyle="Normal"/>
         <TextBlock x:Name="RemainingTime_Txt" HorizontalAlignment="Center" Height="26" Margin="273,166,395,0" Text="*Remaining Time*" TextWrapping="Wrap" VerticalAlignment="Top" Width="132" FontStyle="Normal"/>
 
-        <ProgressBar Margin="479,152,0,276" Height="52" IsIndeterminate="True" Value="57" Foreground="#FF10FF0A"/>
+        <ProgressBar x:Name="Status_Bar" x:FieldModifier="public" Margin="479,152,0,276" Height="52" IsIndeterminate="True" Value="57" Foreground="#FF10FF0A" />
         <CommandBar Margin="479,104,0,0" IsEnabled="True">
             <AppBarButton Icon="MoveToFolder" Label="Sequence" Click="AppBarButton_Load_Click"/>
             <AppBarButton Icon="Stop" Label="Stop" Click="AppBarButton_Stop_Click"/>

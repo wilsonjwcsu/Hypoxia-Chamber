@@ -30,8 +30,8 @@ namespace HypoxiaChamber
         //this helps find the data from the sensors
         public static SensorDataProvider SensorProvider;
         public static HardwareDeviceController OutputController;
-        public static GPIODeviceCOntroller GPIOController;
-
+        public static GPIODeviceController GPIOController;
+        public static Sequencer Sequencer;
         //these are the files that the app reads from for the sensors
         public static Windows.Storage.StorageFile BrightnessFile;
         public static Windows.Storage.StorageFile TemperatureFile;
@@ -82,8 +82,9 @@ namespace HypoxiaChamber
             this.InitializeComponent();
             this.Suspending += OnSuspending;
             SensorProvider = new SensorDataProvider();
-            GPIOController = new GPIODeviceCOntroller();
+            GPIOController = new GPIODeviceController();
             GPIOController.InitGPIO();
+            Sequencer = new Sequencer();
         }
 
 
@@ -154,7 +155,7 @@ namespace HypoxiaChamber
             await SetUpFile();
             App.SensorProvider.MHZ16.Initialize();
             await App.SensorProvider.mcp3008.Initialize();
-            await App.SensorProvider.BME280.Initialize();
+            //await App.SensorProvider.BME280.Initialize();
             SensorProvider.StartTimer();
             try
             {

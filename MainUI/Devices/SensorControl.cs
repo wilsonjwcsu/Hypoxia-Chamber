@@ -35,7 +35,7 @@ namespace HypoxiaChamber
         public SensorDataProvider()
         {
             mcp3008 = new MCP3008(ReferenceVoltage);
-            BME280 = new BME280();
+            //BME280 = new BME280();
             MHZ16 = new MHZ16();
             //StartTimer();
         }
@@ -98,8 +98,8 @@ namespace HypoxiaChamber
                 var tempArgs = new SensorDataEventArgs()
                 {
                     SensorName = "Temperature",
-                    SensorValue = currentTemperature*(9/5)+32,
-                    Timestamp = DateTime.Now
+                    SensorValue = currentTemperature * (9 / 5) + 32,
+                    Timestamp = DateTime.Now,
                 };
                 OnDataReceived(tempArgs);
 
@@ -108,7 +108,7 @@ namespace HypoxiaChamber
                 {
                     SensorName = "Pressure",
                     SensorValue = currentPressure / 1000, //into kPa (1hPa --> 0.1kPa)  ???
-                    Timestamp = DateTime.Now
+                    Timestamp = DateTime.Now,
                 };
                 OnDataReceived(pressureArgs);
 
@@ -117,7 +117,7 @@ namespace HypoxiaChamber
                 {
                     SensorName = "Humidity",
                     SensorValue = currentHumidity,
-                    Timestamp = DateTime.Now
+                    Timestamp = DateTime.Now,
                 };
                 OnDataReceived(humidityArgs);
 
@@ -146,12 +146,12 @@ namespace HypoxiaChamber
                 
                 currentO2 = (currentO2 * (3300.0F / 1024.0F)) / 132F;    // Change characteristic EQ based on Sensor 
                 //  3300mV/132 = 25(%) for a full high signal
-                ////Debug.WriteLine(currentO2);
+                //Debug.WriteLine(currentO2);
                 var O2Args = new SensorDataEventArgs()
                 {
                     SensorName = "O2",
                     SensorValue = currentO2,
-                    Timestamp = DateTime.Now
+                    Timestamp = DateTime.Now,
                 };
                 OnDataReceived(O2Args);
                 
