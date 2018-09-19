@@ -32,6 +32,7 @@ namespace HypoxiaChamber
         public static HardwareDeviceController OutputController;
         public static GPIODeviceController GPIOController;
         public static Sequencer Sequencer;
+        
         //these are the files that the app reads from for the sensors
         public static Windows.Storage.StorageFile BrightnessFile;
         public static Windows.Storage.StorageFile TemperatureFile;
@@ -83,11 +84,10 @@ namespace HypoxiaChamber
             this.Suspending += OnSuspending;
             SensorProvider = new SensorDataProvider();
             GPIOController = new GPIODeviceController();
+            OutputController = new HardwareDeviceController();
             GPIOController.InitGPIO();
             Sequencer = new Sequencer();
         }
-
-
 
             public async Task SetUpFile()
         {

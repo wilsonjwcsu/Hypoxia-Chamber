@@ -66,11 +66,11 @@
         <TextBlock x:Name="RemainingTime_Txt" HorizontalAlignment="Center" Height="26" Margin="273,166,395,0" Text="*Remaining Time*" TextWrapping="Wrap" VerticalAlignment="Top" Width="132" FontStyle="Normal"/>
 
         <ProgressBar x:Name="Status_Bar" x:FieldModifier="public" Margin="479,152,0,276" Height="52" IsIndeterminate="True" Value="57" Foreground="#FF10FF0A" />
-        <CommandBar Margin="479,104,0,0" IsEnabled="True">
-            <AppBarButton Icon="MoveToFolder" Label="Sequence" Click="AppBarButton_Load_Click"/>
-            <AppBarButton Icon="Stop" Label="Stop" Click="AppBarButton_Stop_Click"/>
-            <AppBarButton Icon="Pause" Label="Pause" Click="AppBarButton_Pause_Click"/>
-            <AppBarButton Icon="Play" Label="Play" Click="AppBarButton_Play_Click"/>
+        <CommandBar x:Name="Sequence_Bar" Margin="479,104,0,0" IsEnabled="True">
+            <AppBarButton x:Name="Seq_Load" Icon="MoveToFolder" Label="Sequence" Click="Seq_Load_Click"/>
+            <AppBarButton x:Name="Seq_Stop" Icon="Stop" Label="Stop" Click="Seq_Stop_Click"/>
+            <AppBarButton x:Name="Seq_Pause" Icon="Pause" Label="Pause" Click="Seq_Pause_Click"/>
+            <AppBarButton x:Name="Seq_Play" Icon="Play" Label="Play" Click="Seq_Play_Click"/>
         </CommandBar>
 
         <!--Divider Bar-->

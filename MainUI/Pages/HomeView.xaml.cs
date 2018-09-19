@@ -102,7 +102,24 @@ namespace HypoxiaChamber
             }
         }
 
+        private void Seq_Load_Click(object sender, RoutedEventArgs e)
+        {
 
+            //Validate proper load
+            //create new sequencer object (verify that one currently doesn't exist)
+            //change status to sequence loaded
+            ControlPanelStatus.Text = "Sequence Loaded";
+        }
+
+        private void Seq_Play_Click(object sender, RoutedEventArgs e)
+        {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+            //verify status == Sequence Loaded, otherwise return w/ message
+            //verify 
+            App.GPIOController.StartButtonLight(true);
+            //Popup message--press start button
+            App.Sequencer.sequencer_status = "start";
+            App.Sequencer.StartSequence();
+        }
 
         /**
      * updates the UI when the sensors make a new reading
@@ -150,7 +167,7 @@ namespace HypoxiaChamber
                         currentTemperature = e.SensorValue;
                         Temp_Gauge.Value = currentTemperature;
                         //Temp_Txt.Text = string.Format("{0:0,0.00}", currentTemperature);
-                        App.TemperatureList.Add(nextValue);
+                        //App.TemperatureList.Add(nextValue);
                     });
                     break;
                 case "Pressure":

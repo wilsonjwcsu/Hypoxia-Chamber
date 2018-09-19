@@ -20,14 +20,14 @@ namespace HypoxiaChamber
         //want servo to travel across 0-90 degree angle from 0-100% angle (1ms-1.5ms)
         const int servo_min = 300;  // Min pulse length out of 4095
         const int servo_max = 480;  // Max pulse length out of 4095--should be 660 for 2 ms?
-        const int OAservo_pin = 3;
-        const int EAservo_pin = 4;
+        const int OAservo_pin = 1;
+        const int EAservo_pin = 2;
 
         //Fan PWM constants
         const int FanPWM_min = 300;
         const int FanPWM_max = 600;
-        const int SFpwm_pin = 1;
-        const int RFpwm_pin = 2;
+        const int SFpwm_pin = 5;
+        const int RFpwm_pin = 6;
 
 
         public HardwareDeviceController()
@@ -42,10 +42,8 @@ namespace HypoxiaChamber
             float angle = percent * 0.9F;
             float pulse = angle * (servo_max / servo_min) + servo_min;
             int pulsed = Convert.ToInt32(pulse);
-
-
-
-            //insert angle to pulse width linear fx
+            
+          //insert angle to pulse width linear fx
 
             try
             {
@@ -105,6 +103,9 @@ namespace HypoxiaChamber
         private GpioPinValue StopLEDPinValue = GpioPinValue.High;
         private GpioPinValue N2PinValue = GpioPinValue.High;
         private GpioPinValue LTGPinValue = GpioPinValue.High;
+        public bool StopButton_S = false;
+        public bool StartButton_S = false;
+        private object dispatcher;
 
         public GPIODeviceController()
         {
@@ -129,9 +130,7 @@ namespace HypoxiaChamber
             N2Pin = gpio.OpenPin(N2_C_PIN);
             DoorPin = gpio.OpenPin(DOOR_S_PIN);
             LTGPin = gpio.OpenPin(LTG_C_PIN);
-
-
-
+            
             // Initialize LEDs to the OFF state by first writing a HIGH value
             // We write HIGH because the LED is wired in a active LOW configuration
 
@@ -193,23 +192,31 @@ namespace HypoxiaChamber
             // toggle the state of the LED every time the button is pressed
             if (e.Edge == GpioPinEdge.FallingEdge)
             {
-                StopLEDPinValue = (StopLEDPinValue == GpioPinValue.Low) ?
-                    GpioPinValue.High : GpioPinValue.Low;
-                StopLEDPin.Write(StopLEDPinValue);
+                //StopLEDPinValue = (StopLEDPinValue == GpioPinValue.Low) ?
+                //    GpioPinValue.High : GpioPinValue.Low;
+                //StopLEDPin.Write(StopLEDPinValue);
+                StopLEDPin.Write(GpioPinValue.High);
+                StopButton_S = true;
+            }
+            else
+            {
+                StopLEDPin.Write(GpioPinValue.Low);
+                StopButton_S = false;
             }
 
-            //// need to invoke UI updates on the UI thread because this event
+            //// need to invoke ui updates on the ui thread because this event
             //// handler gets invoked on a separate thread.
-            //var task = Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => {
-            //    if (e.Edge == GpioPinEdge.FallingEdge)
+            //var task = dispatcher.runasync(coredispatcherpriority.normal, () =>
+            //{
+            //    if (e.edge == gpiopinedge.fallingedge)
             //    {
-            //        ledEllipse.Fill = (ledPinValue == GpioPinValue.Low) ?
-            //            redBrush : grayBrush;
-            //        GpioStatus.Text = "Button Pressed";
+            //        ledellipse.fill = (ledpinvalue == gpiopinvalue.low) ?
+            //            redbrush : graybrush;
+            //        gpiostatus.text = "button pressed";
             //    }
             //    else
             //    {
-            //        GpioStatus.Text = "Button Released";
+            //        gpiostatus.text = "button released";
             //    }
             //});
         }
@@ -218,10 +225,33 @@ namespace HypoxiaChamber
             // toggle the state of the LED every time the button is pressed
             if (e.Edge == GpioPinEdge.FallingEdge)
             {
-                StartLEDPinValue = (StartLEDPinValue == GpioPinValue.Low) ?
-                    GpioPinValue.High : GpioPinValue.Low;
-                StartLEDPin.Write(StartLEDPinValue);
+                //StartLEDPinValue = (StartLEDPinValue == GpioPinValue.Low) ?
+                //    GpioPinValue.High : GpioPinValue.Low;
+                //StartLEDPin.Write(StartLEDPinValue);
+                StartLEDPin.Write(GpioPinValue.High);
+                StartButton_S = true;
             }
+            else
+            {
+                StartLEDPin.Write(GpioPinValue.Low);
+                StartButton_S = false;
+            }
+
+            //// need to invoke ui updates on the ui thread because this event
+            //// handler gets invoked on a separate thread.
+            //var task = dispatcher.runasync(coredispatcherpriority.normal, () =>
+            //{
+            //    if (e.edge == gpiopinedge.fallingedge)
+            //    {
+            //        ledellipse.fill = (ledpinvalue == gpiopinvalue.low) ?
+            //            redbrush : graybrush;
+            //        gpiostatus.text = "button pressed";
+            //    }
+            //    else
+            //    {
+            //        gpiostatus.text = "button released";
+            //    }
+            //});
         }
 
         public void StartButtonLight(bool value)

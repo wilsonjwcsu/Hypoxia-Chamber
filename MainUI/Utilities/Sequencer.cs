@@ -22,14 +22,14 @@ namespace HypoxiaChamber
     public delegate void SequenceChangeEventHandler(object sender, SensorDataEventArgs e);
     public class Sequencer
     {
-       
+        public string sequencer_status;
         string sequence_filename;
 
-        double O2_val;
-        double O2_sp = 10;
+        double O2_VAL;
+        double O2_SP = 10;
         const double O2_DB = 0.1;
-        double CO2_val;
-        double CO2_sp;
+        double CO2_VAL;
+        double CO2_SP;
         const double CO2_DB = 150;
         double Temp_val;
         double Hum_val;
@@ -43,6 +43,9 @@ namespace HypoxiaChamber
         int EAD_O;
         int RF_O;
 
+        int elapsed_time = 0;
+
+
         private Timer SequenceValidateTimer;
 
         public Sequencer() 
@@ -51,6 +54,7 @@ namespace HypoxiaChamber
             App.OutputController.ServoRotate(3, 0);
             App.OutputController.ServoRotate(4, 0);
             App.GPIOController.N2_Com(N2_C = false);
+            sequencer_status = "unloaded";
 
         }
 
@@ -68,21 +72,34 @@ namespace HypoxiaChamber
         //    }
         //}
 
-        void StartSequence()
+        public void StartSequence()
         {
             //load list into new list with current time offsets for each phase of program
-
+            sequencer_status = "loaded";
             //temporary solution below--load the single value set from UI on the sequencing page
             //HomeView.Status_Bar.IsIndeterminate = true;
             App.GPIOController.StartButtonLight(true);
             //popup confimation message
 
-            SequenceValidateTimer = new Timer(SequenceRuntime, this, 1000, 5000);    //1000ms period
+            SequenceValidateTimer = new Timer(SequenceRuntime, this, 1000, 5000);    //1000ms period for sequence timer call
+        }
 
+        public void StopSequence()
+        {
+            //dispose of (stop) SequenceValidateTimer 
+            sequencer_status = "stopped";
+        }
+
+        public void PauseSequence()
+        {
+            //stop SquenceValidateTimer
+            sequencer_status = "paused";
         }
 
         void SequenceRuntime(object state)
         {
+            elapsed_time++;     //increment elapsed second timer by +1
+            sequencer_status = "running";
             if (N2_C_OverRide == true)
             {
                 return;
@@ -90,7 +107,7 @@ namespace HypoxiaChamber
 
             if (N2_C == true)
             {
-                if (O2_val <= O2_sp)
+                if (O2_VAL <= O2_SP)
                 {
                     N2_C = false;
                     App.GPIOController.N2_Com(N2_C);
@@ -100,7 +117,7 @@ namespace HypoxiaChamber
             }
             else if (N2_C == false)
             {
-                if(O2_val > (O2_sp + O2_DB))
+                if(O2_VAL > (O2_SP + O2_DB))
                 {
                     N2_C = true;
                     App.GPIOController.N2_Com(N2_C);
@@ -108,7 +125,7 @@ namespace HypoxiaChamber
                 }
             }
             
-            //integrate CO2 sequenceing
+            //integrate CO2 sequencing
                 
         }
 
@@ -120,13 +137,13 @@ namespace HypoxiaChamber
             {
                 case "O2":
                     {
-                        O2_sp = e.ParameterValue;
+                        O2_SP = e.ParameterValue;
                     }
                     break;
 
                 case "CO2":
                     {
-                        CO2_sp = e.ParameterValue;
+                        CO2_SP = e.ParameterValue;
                     }
                     break;
             }
@@ -142,12 +159,12 @@ namespace HypoxiaChamber
             {
                 case "O2":
                     {
-                        O2_val = e.SensorValue;
+                        O2_VAL = e.SensorValue;
                     };
                     break;
                 case "CO2":
                     {
-                        CO2_val = e.SensorValue;
+                        CO2_VAL = e.SensorValue;
 
                     };
                     break;
