@@ -72,17 +72,12 @@ namespace HypoxiaChamber
         {
 
         }
+    }
 
-
-
-
-        public class SequenceDataArgs : EventArgs
-        {
-            public string ParameterName;
-            public double ParameterValue;      //Previously float
-
-        }
-
+    public class SequenceDataArgs : EventArgs
+    {
+        public string ParameterName;
+        public double ParameterValue;      //Previously float
 
     }
 }
