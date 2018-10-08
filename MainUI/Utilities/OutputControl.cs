@@ -13,72 +13,7 @@ using Windows.Devices.Gpio;
 namespace HypoxiaChamber
 {
 
-    //public class HardwareDeviceController     //used in PWM driver -- see the PWM branch
-    //{
 
-    //    //SERVO constants
-    //    //want servo to travel across 0-90 degree angle from 0-100% angle (1ms-1.5ms)
-    //    const int servo_min = 300;  // Min pulse length out of 4095
-    //    const int servo_max = 480;  // Max pulse length out of 4095--should be 660 for 2 ms?
-    //    const int OAservo_pin = 1;
-    //    const int EAservo_pin = 2;
-
-    //    //Fan PWM constants
-    //    const int FanPWM_min = 300;
-    //    const int FanPWM_max = 600;
-    //    const int SFpwm_pin = 5;
-    //    const int RFpwm_pin = 6;
-
-
-    //    public HardwareDeviceController()
-    //    {
-
-    //    }
-
-
-
-    //    public void ServoRotate(int PWMchannel, int percent)
-    //    {
-    //        float angle = percent * 0.9F;
-    //        float pulse = angle * (servo_max / servo_min) + servo_min;
-    //        int pulsed = Convert.ToInt32(pulse);
-
-    //        //insert angle to pulse width linear fx
-
-    //        try
-    //        {
-    //            //The servoMin/servoMax values are dependant on the hardware you are using.
-    //            //The values below are for my SR-4303R continuous rotating servos.
-    //            //If you are working with a non-continous rotatng server, it will have an explicit
-    //            //minimum and maximum range; crossing that range can cause the servo to attempt to
-    //            //spin beyond its capability, possibly damaging the gears.
-
-    //            //using (var PWMhat = new Adafruit.Pwm.PwmController())
-    //            using (var PWMhat = new Adafruit.Pwm.PwmController())
-    //            {
-    //                DateTime timeout = DateTime.Now.AddSeconds(10);
-    //                PWMhat.SetDesiredFrequency(60);
-    //                while (timeout >= DateTime.Now)
-    //                {
-    //                    PWMhat.SetPulseParameters(PWMchannel, pulsed, false);
-    //                    Task.Delay(TimeSpan.FromSeconds(1)).Wait();
-    //                    //PWMhat.SetPulseParameters(PWMchannel, servoMax, false);
-    //                    //Task.Delay(TimeSpan.FromSeconds(1)).Wait();
-    //                }
-    //            }
-    //        }
-
-    //        /* If the write fails display the error and stop running */
-    //        catch (Exception ex)
-    //        {
-    //            Debug.WriteLine("Failed to communicate with servo hat: " + ex.Message);
-    //            return;
-    //        }
-
-    //    }
-
-
-    //}
 
     public class GPIODeviceController
     {
