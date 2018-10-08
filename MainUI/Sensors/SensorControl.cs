@@ -35,17 +35,17 @@ namespace HypoxiaChamber
         public SensorDataProvider()
         {
             mcp3008 = new MCP3008(ReferenceVoltage);
-            BME280 = new BME280();
+            //BME280 = new BME280();
             MHZ16 = new MHZ16();
             //StartTimer();
         }
 
         public void StartTimer()
         {
-            SampleTimer = new Timer(TimerCallback, this, 1000, 1000);    //1000ms period
+            SampleTimer = new Timer(TimerCallback, this, 2000, 1000);    //Startup delay (ms), 1000ms period
             Debug.WriteLine("SampleTimer Initialize");
             //writeToFile = new Timer(WriteToFileTimerCallback, this, 25000, 1000);     //2500ms startup delay, 1000ms period
-            Debug.WriteLine("WriteTimer Initialize");
+            //Debug.WriteLine("WriteTimer Initialize");
         }
         private async void WriteToFileTimerCallback(object state)
         {
@@ -156,8 +156,8 @@ namespace HypoxiaChamber
                 OnDataReceived(O2Args);
                 
             }
-
-            if(MHZ16 == null)
+            //currentCO2 = 99f;       //remove on successful run and restore commented out CO2 read below
+            if (MHZ16 == null)
             {
                 Debug.WriteLine("MHZ16 is null");
                 return;
@@ -165,10 +165,11 @@ namespace HypoxiaChamber
             else
             {
                 currentCO2 = (float)(MHZ16.ReadCO2());
-                //if (currentCO2 == 999999f)
-                //{
-                //    //Add Some Method for restarting disconnected/reconnected i2c device
-                //}
+
+                if (currentCO2 == 999999f)
+                {
+                    //Add Some Method for restarting disconnected/reconnected i2c device
+                }
                 var CO2Args = new SensorDataEventArgs()
                 {
                     SensorName = "CO2",
@@ -176,8 +177,8 @@ namespace HypoxiaChamber
                     Timestamp = DateTime.Now
                 };
                 OnDataReceived(CO2Args);
-               
-               
+
+
 
             }
         }

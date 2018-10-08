@@ -14,7 +14,6 @@ using System;
 using System.Threading;
 using System.Linq;
 using System.Diagnostics;
-using Windows.UI.Xaml.Controls;
 using Windows.Devices.I2c;
 
 namespace HypoxiaChamber

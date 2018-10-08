@@ -141,10 +141,10 @@ namespace HypoxiaChamber
         {
             SensorProvider = new SensorDataProvider();       //Not original location (see App())
             await SetUpFile();
-            App.SensorProvider.MHZ16.Initialize();
-            await App.SensorProvider.mcp3008.Initialize();
-            await App.SensorProvider.BME280.Initialize();
-            SensorProvider.StartTimer();
+            App.SensorProvider.MHZ16.Initialize();        //Initialize CO2 Sensor
+            await App.SensorProvider.mcp3008.Initialize();  //Initialize ADC (for O2 Sensor Voltage Reading)
+            //await App.SensorProvider.BME280.Initialize();   //Initialize Environmental Sensor
+            //SensorProvider.StartTimer();                    //Start Timer that triggers sensor readings
             try
             {
                 PlantSettings = await SettingsPage.Load(FileNames.SettingsfileName);        //Weird auto-catch was generated somewhere RE load function
@@ -199,6 +199,7 @@ namespace HypoxiaChamber
                 // Ensure the current window is active
                 Window.Current.Activate();
             }
+            SensorProvider.StartTimer();                    //Start Timer that triggers sensor readings
         }
 
         /// <summary>
