@@ -143,7 +143,7 @@ namespace HypoxiaChamber
             await SetUpFile();
             App.SensorProvider.MHZ16.Initialize();        //Initialize CO2 Sensor
             await App.SensorProvider.mcp3008.Initialize();  //Initialize ADC (for O2 Sensor Voltage Reading)
-            //await App.SensorProvider.BME280.Initialize();   //Initialize Environmental Sensor
+            await App.SensorProvider.BME280.Initialize();   //Initialize Environmental Sensor
             //SensorProvider.StartTimer();                    //Start Timer that triggers sensor readings
             try
             {

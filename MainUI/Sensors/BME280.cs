@@ -106,7 +106,7 @@ namespace HypoxiaChamber
         //Method to initialize the BME280 sensor
         public async Task Initialize()
         {
-            Debug.WriteLine("BME280::Initialize");
+            Debug.WriteLine("BME280::Initialize Attempt");
 
             try
             {
@@ -135,13 +135,13 @@ namespace HypoxiaChamber
                     catch (Exception e)
                     {
                         init = false;
-                        Debug.WriteLine("Exception: " + e.Message + "\n" + e.StackTrace);
+                        Debug.WriteLine("BME280::Initialization Exception: " + e.Message + "\n" + e.StackTrace);
                     }
                 }
             }
             catch (Exception e)
             {
-                Debug.WriteLine("Exception: " + e.Message + "\n" + e.StackTrace);
+                Debug.WriteLine("BME280::Exception: " + e.Message + "\n" + e.StackTrace);
                 throw;
             }
 
@@ -154,7 +154,7 @@ namespace HypoxiaChamber
 
             //Read the device signature
             bme280.WriteRead(WriteBuffer, ReadBuffer);
-            Debug.WriteLine("BME280 Signature: " + ReadBuffer[0].ToString());
+            Debug.WriteLine("BME280::Signature: " + ReadBuffer[0].ToString());
 
             //Verify the device signature
             if (ReadBuffer[0] != BME280_Signature)

@@ -35,7 +35,7 @@ namespace HypoxiaChamber
         public SensorDataProvider()
         {
             mcp3008 = new MCP3008(ReferenceVoltage);
-            //BME280 = new BME280();
+            BME280 = new BME280();
             MHZ16 = new MHZ16();
             //StartTimer();
         }
@@ -85,6 +85,7 @@ namespace HypoxiaChamber
             if (BME280 == null)
             {
                 Debug.WriteLine("BME280 is null");
+                return;
             }
             else
             {
