@@ -78,7 +78,7 @@ namespace HypoxiaChamber
             controlPanelTimer = new Timer(TimerControlPanel, this, 0, 1000);
 
             DateTime Now = DateTime.Now;
-            Random rand = new Random();
+            Random rand = new Random();     //Not sure if the random component of saving these is necessary, but if it is, the structure of the sensor data needs to incorporate this component.
             TimeSpan oneDay = new TimeSpan(1, 0, 0, 0);
             TimeSpan oneHour = new TimeSpan(1, 0, 0);
             DateTime LowerBound = Now - oneDay;

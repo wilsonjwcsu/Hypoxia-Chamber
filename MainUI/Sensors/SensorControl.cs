@@ -1,20 +1,14 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using Windows.UI.Core;
-using HypoxiaChamber;
 
 namespace HypoxiaChamber
 {
     public delegate void DataReceivedEventHandler(object sender, SensorDataEventArgs e);
     public class SensorDataProvider
     {
-        const float ReferenceVoltage = 3.3F;                //5 or 3.3?
+        const float ReferenceVoltage = 3.3F;                //3.3V logic level on Raspberry Pi, but oxygen sensor will use 5V reference (see new diagram)
         public event DataReceivedEventHandler DataReceived;
         public MCP3008 mcp3008;
         public BME280 BME280;
@@ -22,15 +16,15 @@ namespace HypoxiaChamber
 
         // Values for which channels we will be using from the ADC chip
         const byte O2ADCChannel = 0;
-        //const byte LightSensorADCChannel = 1;
-        //const byte HighPotentiometerADCChannel = 2;
+        //const byte LightSensorADCChannel = 1;     //currently these have no usages
+        //const byte HighPotentiometerADCChannel;
 
         float currentO2;
         float currentCO2;
 
         private Timer SampleTimer;
         private Timer writeToFile;
-        Random rand = new Random();
+        readonly Random rand = new Random();        //Has to do with saving sensor data to file. See below and HomeView(). This use of random numbers should be changed if possible.
 
         public SensorDataProvider()
         {
@@ -71,8 +65,7 @@ namespace HypoxiaChamber
             }
            // App.BrightnessList.Clear();
             //App.TemperatureList.Clear();
-            App.O2List.Clear();
-            
+            App.O2List.Clear();            
         }
 
         /**
@@ -93,7 +86,7 @@ namespace HypoxiaChamber
                 //the sensor name, the data point, and the time the value was measured.
                 //this data is then sent back to the main page and the UI is adjusted based
                 //off of the measurement. 
-                //float currentTemperature = (float) rand.NextDouble() * 10;
+                //float currentTemperature = (float) rand.NextDouble() * 10;        //This random component may be used for the past method of saving values to file. See Homeview()
                 float currentTemperature = await BME280.ReadTemperature();
                 var tempArgs = new SensorDataEventArgs()
                 {
@@ -120,7 +113,6 @@ namespace HypoxiaChamber
                     Timestamp = DateTime.Now
                 };
                 OnDataReceived(humidityArgs);
-
                 //float currentAltitude = await BME280.ReadAltitude(seaLevel);
                 //var altitudeArgs = new SensorDataEventArgs()
                 //{
@@ -140,10 +132,8 @@ namespace HypoxiaChamber
             }
             else
             {
-                ////Debug.WriteLine("O2Call");
-               
-                currentO2 = mcp3008.ReadADC(O2ADCChannel);
-                
+                ////Debug.WriteLine("O2Call");             
+                currentO2 = mcp3008.ReadADC(O2ADCChannel);              
                 currentO2 = (currentO2 * (3300.0F / 1024.0F)) / 132F;    // Change characteristic EQ based on Sensor 
                 //  3300mV/132 = 25(%) for a full high signal
                 ////Debug.WriteLine(currentO2);
@@ -153,10 +143,9 @@ namespace HypoxiaChamber
                     SensorValue = currentO2,
                     Timestamp = DateTime.Now
                 };
-                OnDataReceived(O2Args);
-                
+                OnDataReceived(O2Args);          
             }
-            //currentCO2 = 99f;       //remove on successful run and restore commented out CO2 read below
+            //currentCO2 = 99F;       //remove on successful run and restore commented out CO2 read below
             if (MHZ16 == null)
             {
                 Debug.WriteLine("MHZ16 is null");
@@ -164,7 +153,7 @@ namespace HypoxiaChamber
             }
             else
             {
-                currentCO2 = (float)(MHZ16.ReadCO2());
+                currentCO2 = (float)MHZ16.ReadCO2();
 
                 if (currentCO2 == 999999f)
                 {
@@ -177,12 +166,8 @@ namespace HypoxiaChamber
                     Timestamp = DateTime.Now
                 };
                 OnDataReceived(CO2Args);
-
-
-
             }
         }
-
 
         protected virtual void OnDataReceived(SensorDataEventArgs e)
         {
@@ -192,6 +177,7 @@ namespace HypoxiaChamber
             }
         }
     }
+
     public class SensorDataEventArgs : EventArgs
     {
         public string SensorName;
