@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Devices.Enumeration;
-using Windows.Devices.Gpio;
 using Windows.Devices.I2c;
 
 namespace HypoxiaChamber
@@ -123,7 +119,7 @@ namespace HypoxiaChamber
                 //Check if device was found
                 if (bme280 == null)
                 {
-                    Debug.WriteLine("Device not found");
+                    Debug.WriteLine("BME280::Device not found");
                 }
                 else
                 {
