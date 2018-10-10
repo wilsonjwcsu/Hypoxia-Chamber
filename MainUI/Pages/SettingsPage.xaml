@@ -18,6 +18,10 @@
             <AppBarButton Icon="Help" Label="Help" Foreground="#ffffff" Click="HelpPageButton_Click"/>
         </CommandBar>
         <TextBlock HorizontalAlignment="Left" Height="52" Margin="11,-1,0,0" Text="System Settings" TextWrapping="Wrap" VerticalAlignment="Top" Width="282" FontSize="36" Foreground="White"/>
-    
+        <Grid x:Name="SystemGrid" HorizontalAlignment="Left" Height="173" Margin="638,297,0,0" VerticalAlignment="Top" Width="151">
+        <Button Content="Shutdown System" HorizontalAlignment="Left" Margin="0,120,0,0" VerticalAlignment="Top" Click="ShutdownButton_Click" Height="54" Width="152" Background="#BFFF2500"/>
+        <Button Content="Restart System" HorizontalAlignment="Left" Margin="0,60,0,0" VerticalAlignment="Top" Click="RestartButton_Click" Height="54" Width="152" Background="#BFFF9C00"/>
+        <Button Content="Exit Application" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Click="ExitButton_Click" Height="54" Width="152" Background="#FFFFF700"/>
+        </Grid>
     </Grid>
 </Page>

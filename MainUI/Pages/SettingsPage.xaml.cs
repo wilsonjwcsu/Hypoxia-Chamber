@@ -15,6 +15,7 @@ using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.System;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
@@ -37,6 +38,7 @@ namespace HypoxiaChamber
             //IdealTempTextBox.Text = App.PlantSettings.IdealTemp.ToString();
             //IdealBrightTextBox.Text = App.PlantSettings.IdealBright.ToString();
             //IdealSoilTextBox.Text = App.PlantSettings.IdealSoilMoist.ToString();
+            Unloaded += SettingsPage_Unloaded;
         }
 
         //private void SettingsSave_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
@@ -64,8 +66,32 @@ namespace HypoxiaChamber
         //    App.PlantSettings.Save();
         //}
 
-        
-            
+        private void ShutdownButton_Click(object sender, RoutedEventArgs e)
+
+        {
+            //Add confirmation Popup and information about disconnecting the mains power after screen goes white and then black again, NOT BEFORE.
+            Windows.System.ShutdownManager.BeginShutdown(Windows.System.ShutdownKind.Shutdown, TimeSpan.FromSeconds(0));
+        }
+
+        private void RestartButton_Click(object sender, RoutedEventArgs e)
+
+        {
+            //Add Confirmation Popup and notice that the device will take approximately 2 minutes to reboot automatically and to NOT disconnect the mains power.
+            Windows.System.ShutdownManager.BeginShutdown(Windows.System.ShutdownKind.Restart, TimeSpan.FromSeconds(0));
+        }
+
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
+
+        {
+            //Add confirmation Popup about exiting the application to the IoT homescreen.
+            Application.Current.Exit();
+        }
+        private void SettingsPage_Unloaded(object sender, object args)
+        {
+            //redPin.Dispose();         //not sure where GPIO disposal should go. Here (upon exit of this page and then the whole app) or in the Device Sequencer which controls the GPIOs
+            //greenPin.Dispose();
+        }
+
         /**
          * If the user presses the app-bar buttons, they will go to the appropriate pages
          * */
