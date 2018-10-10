@@ -78,6 +78,7 @@ namespace HypoxiaChamber
             if (BME280 == null)
             {
                 Debug.WriteLine("BME280 is null");
+                return;
             }
             else
             {

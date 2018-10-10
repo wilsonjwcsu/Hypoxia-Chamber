@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Devices.Enumeration;
-using Windows.Devices.Gpio;
 using Windows.Devices.I2c;
 
 namespace HypoxiaChamber
@@ -106,7 +102,7 @@ namespace HypoxiaChamber
         //Method to initialize the BME280 sensor
         public async Task Initialize()
         {
-            Debug.WriteLine("BME280::Initialize");
+            Debug.WriteLine("BME280::Initialize Attempt");
 
             try
             {
@@ -123,7 +119,7 @@ namespace HypoxiaChamber
                 //Check if device was found
                 if (bme280 == null)
                 {
-                    Debug.WriteLine("Device not found");
+                    Debug.WriteLine("BME280::Device not found");
                 }
                 else
                 {
@@ -135,13 +131,13 @@ namespace HypoxiaChamber
                     catch (Exception e)
                     {
                         init = false;
-                        Debug.WriteLine("Exception: " + e.Message + "\n" + e.StackTrace);
+                        Debug.WriteLine("BME280::Initialization Exception: " + e.Message + "\n" + e.StackTrace);
                     }
                 }
             }
             catch (Exception e)
             {
-                Debug.WriteLine("Exception: " + e.Message + "\n" + e.StackTrace);
+                Debug.WriteLine("BME280::Exception: " + e.Message + "\n" + e.StackTrace);
                 throw;
             }
 
@@ -154,7 +150,7 @@ namespace HypoxiaChamber
 
             //Read the device signature
             bme280.WriteRead(WriteBuffer, ReadBuffer);
-            Debug.WriteLine("BME280 Signature: " + ReadBuffer[0].ToString());
+            Debug.WriteLine("BME280::Signature: " + ReadBuffer[0].ToString());
 
             //Verify the device signature
             if (ReadBuffer[0] != BME280_Signature)
