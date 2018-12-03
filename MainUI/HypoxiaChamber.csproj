@@ -95,6 +95,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\OutputControl.cs" />
     <Compile Include="Pages\AirflowFocus.xaml.cs">
       <DependentUpon>AirflowFocus.xaml</DependentUpon>
     </Compile>

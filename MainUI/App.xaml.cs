@@ -28,6 +28,7 @@ namespace HypoxiaChamber
     {
         //this helps find the data from the sensors
         public static SensorDataProvider SensorProvider;
+        public static GPIODeviceController GPIOController;
 
         //these are the files that the app reads from for the sensors
         public static Windows.Storage.StorageFile BrightnessFile;
