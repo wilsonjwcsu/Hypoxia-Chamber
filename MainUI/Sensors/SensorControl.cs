@@ -1,4 +1,5 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
+// Copyright (c) Microsoft. All rights reserved.
+// made a change
 using System;
 using System.Diagnostics;
 using System.Threading;
