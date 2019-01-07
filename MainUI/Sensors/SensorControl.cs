@@ -184,6 +184,7 @@ namespace HypoxiaChamber
     {
         public string SensorName;
         public float SensorValue;      //Previously float
-        public DateTime Timestamp;
+        public DateTime Timestamp; // I seem to have some difficulty with a lot of this, how about this 
+        //what is life 
     }
 }
